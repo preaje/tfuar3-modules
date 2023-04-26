@@ -78,6 +78,7 @@ resource "aws_lb" "example" {
 }
 
 resource "aws_lb_listener" "http" {
+  #ts:skip=AWS.ALL.IS.MEDIUM.0046 Skip HTTPS requirement for example resource
   load_balancer_arn = aws_lb.example.arn
   port              = local.http_port
   protocol          = "HTTP"

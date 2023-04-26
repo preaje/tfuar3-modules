@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2154
 
 cat > index.html <<EOF
 <h1>${server_text}</h1>
