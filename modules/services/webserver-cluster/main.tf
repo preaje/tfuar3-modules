@@ -29,12 +29,12 @@ resource "aws_security_group" "instance" {
 }
 
 resource "aws_launch_configuration" "example" {
-
+  #ts:skip=AC-AW-CA-LC-H-0439 Skip HTTPS requirement for example resource
   image_id        = var.ami
   instance_type   = var.instance_type
   security_groups = [aws_security_group.instance.id]
 
-  user_data = templatefile("${path.module}/user-data.sh", {
+  user_data = templatefile("${path.module}/user-data.sh.template", {
     server_text = var.server_text
     server_port = var.server_port
     db_address  = data.terraform_remote_state.db.outputs.address
@@ -78,6 +78,7 @@ resource "aws_lb" "example" {
 }
 
 resource "aws_lb_listener" "http" {
+  #ts:skip=AWS.ALL.IS.MEDIUM.0046 Skip HTTPS requirement for example resource
   load_balancer_arn = aws_lb.example.arn
   port              = local.http_port
   protocol          = "HTTP"
@@ -95,6 +96,7 @@ resource "aws_lb_listener" "http" {
 }
 
 resource "aws_lb_target_group" "asg" {
+  #ts:skip=AWS.ALTG.IS.MEDIUM.0042 Skip HTTPS requirement for example resource
   name     = "${var.cluster_name_prefix}-tg"
   port     = var.server_port
   protocol = "HTTP"
